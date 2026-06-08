@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User{
+  id String  @id @default(cuid())
+  email String? unique
+  name String? 
+  createdAt DateTime @default(now())
+  lastSeen  DateTime?
+  questions Question[]
+}
+model Question{
+  id String  @id @default(cuid())
+  userId String?
+  user   User?   @relation(fields : [userId],references : [id])
+  text   String
+  createdAt  DateTime  @default(now())
+  ip         String?
+  userAgent  String?
+  responses  Response[]
+  traceId    String?
+}
+model Response{
+  id           String   @id @default(cuid())
+  questionId   String
+  question     Question @relation(fields: [questionId], references: [id])
+  personality  String?
+  text         String
+  model        String
+  tokens       Int?
+  latencyMs    Int?
+  createdAt    DateTime @default(now())
+}
+model Moderation {
+  id         String   @id @default(cuid())
+  targetType String
+  targetId   String
+  result     String
+  note       String?
+  reviewedBy String?
+  reviewedAt DateTime?
+}
