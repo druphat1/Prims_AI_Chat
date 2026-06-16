@@ -1,4 +1,4 @@
--- CreateTable
+
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "email" TEXT,
@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "lastSeen" DATETIME
 );
 
--- CreateTable
+
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT,
@@ -32,7 +32,6 @@ CREATE TABLE "Response" (
     CONSTRAINT "Response_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- CreateTable
 CREATE TABLE "Moderation" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "targetType" TEXT NOT NULL,
@@ -43,5 +42,4 @@ CREATE TABLE "Moderation" (
     "reviewedAt" DATETIME
 );
 
--- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
